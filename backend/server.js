@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { urlencoded } from 'express'
 import 'dotenv/config'
 
 import authRoute from './routes/authRoute.js'
@@ -9,6 +9,9 @@ import authRoute from './routes/authRoute.js'
 const PORT = process.env.PORT || 3030
 
 const app = express()
+
+app.use(urlencoded({extended: true}));
+app.use(express.json())
 
 app.use('/auth', authRoute);
 // app.use('/user', commentRoute);
