@@ -1,0 +1,11 @@
+model Comment {
+    id String @id
+    post Post? @relation(fields: [postId], references: [id])
+    postId String?
+    author User @relation(fields: [authorId], references: [id])
+    authorId String
+    text String
+    likes Int @default(0)
+    dislikes Int @default(0)
+    created_at DateTime @default(now())
+}

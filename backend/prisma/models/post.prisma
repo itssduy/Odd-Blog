@@ -1,0 +1,12 @@
+model Post {
+    id String @id
+    author User @relation(fields: [authorId], references: [id])
+    authorId String
+    comments Comment[]
+    title String
+    text String
+    likes Int @default(0)
+    dislikes Int @default(0)
+    published Boolean @default(false)
+    created_at DateTime @default(now())
+}
