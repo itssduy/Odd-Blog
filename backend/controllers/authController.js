@@ -1,8 +1,6 @@
-import jwt from 'jsonwebtoken'
-import fs from 'fs'
 import { prisma } from "../lib/prisma.js"
 import { genPass, verifyPass } from "../lib/passwordUtils.js"
-
+import { getToken, verifyToken } from "../lib/tokenUtils.js"
 const postLogin = async (req, res) => {
     try {
 
@@ -18,16 +16,10 @@ const postLogin = async (req, res) => {
             res.send(400).send('user not found')
         }
         if (verifyPass(user.salt, user.hash, password)){
-            const privateKey = fs.readFileSync('private.key');
+            const data = { userId: user.id }
 
-            jwt.sign({ userId: user.id }, privateKey, { algorithm: 'RS256' }, (err, token) => {
-                if(err){
-                    res.status(400).send('error')
-                }else {
-                    res.send(token)
-
-                }
-            });
+            const token = await getToken(data);
+            res.json(token);
         } else {
             res.status(400).send('wrong password')
         }
@@ -56,6 +48,8 @@ const postSignup = async (req, res) => {
         })
         
         const privateKey = fs.readFileSync('private.key');
+        const data = { userId: user.id }
+
 
         jwt.sign({ userId: newUser.id }, privateKey, { algorithm: 'RS256' }, (err, token) => {
             if(err){
