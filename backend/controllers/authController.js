@@ -17,7 +17,7 @@ const postLogin = async (req, res) => {
         if(!user){
             res.send(400).send('user not found')
         }
-        if (verifyPass(salt, hash, pass)){
+        if (verifyPass(user.salt, user.hash, password)){
             const privateKey = fs.readFileSync('private.key');
 
             jwt.sign({ userId: user.id }, privateKey, { algorithm: 'RS256' }, (err, token) => {
@@ -34,6 +34,7 @@ const postLogin = async (req, res) => {
     
 
     } catch (err){
+        console.log(err);
         res.status(500).send('unkown error');
     }
 }
@@ -56,7 +57,7 @@ const postSignup = async (req, res) => {
         
         const privateKey = fs.readFileSync('private.key');
 
-        jwt.sign({ userId: user.id }, privateKey, { algorithm: 'RS256' }, (err, token) => {
+        jwt.sign({ userId: newUser.id }, privateKey, { algorithm: 'RS256' }, (err, token) => {
             if(err){
                 res.status(400).send('error')
             }else {
@@ -65,6 +66,7 @@ const postSignup = async (req, res) => {
             }
         });
     }catch (err){
+        console.log(err);
         res.status(500).send('unkown error');
     }
     
