@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 import authRoute from './routes/authRoute.js'
 import postRoute from './routes/postRoute.js'
-// import commentRoute from './routes/commentRoute.js'
+import commentRoute from './routes/commentRoute.js'
 // import userRoute from './routes/userRoute.js'
 
 const PORT = process.env.PORT || 3030
@@ -15,7 +15,7 @@ app.use(express.json())
 
 app.use('/auth', authRoute);
 app.use('/posts', postRoute);
-//app.use('/user', commentRoute);
+app.use('/user', commentRoute);
 // app.use('/comment', userRoute);
 
 app.listen(PORT, ()=>{
