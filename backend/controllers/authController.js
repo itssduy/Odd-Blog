@@ -1,9 +1,12 @@
+import fs from 'fs'
+
 import { prisma } from "../lib/prisma.js"
 import { genPass, verifyPass } from "../lib/passwordUtils.js"
 import { getToken, verifyToken } from "../lib/tokenUtils.js"
 const postLogin = async (req, res) => {
     try {
 
+        console.log(req.body);
         const {username, password} = req.body
 
         const user = await prisma.user.findFirst({
@@ -13,7 +16,8 @@ const postLogin = async (req, res) => {
         })
 
         if(!user){
-            res.send(400).send('user not found')
+            res.status(404).send('user not found')
+            return;
         }
         if (verifyPass(user.salt, user.hash, password)){
             const data = { userId: user.id }
@@ -21,13 +25,15 @@ const postLogin = async (req, res) => {
             const token = await getToken(data);
             res.json(token);
         } else {
-            res.status(400).send('wrong password')
+            res.status(401).send('wrong password')
+            return;
         }
     
 
     } catch (err){
         console.log(err);
         res.status(500).send('unkown error');
+        return;
     }
 }
 

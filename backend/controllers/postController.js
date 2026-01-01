@@ -13,9 +13,9 @@ const getAllPosts = async (req, res)=>{
 
 const postPost = async (req, res)=>{
     try {
-        const {title, text} = req.body
-        const authorId = ''
-        const newPost = prisma.post.create({
+        const {title, text} = req.body;
+        const authorId = req.data.userId;
+        const newPost = await prisma.post.create({
             data: {
                 authorId: authorId,
                 title: title,
@@ -24,6 +24,7 @@ const postPost = async (req, res)=>{
         })
         res.json(newPost);
     } catch (err) {
+        console.log(err)
         res.status(400).send('error')
     }
 }
