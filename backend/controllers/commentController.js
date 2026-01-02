@@ -29,11 +29,18 @@ const getComments = async (req, res)=>{
             where: {
                 postId: postId
             },
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                    }
+                },
+                post: true
+            },
             orderBy: {
                 created_at: "desc"
-            }
+            },
         });
-        console.log(comments)
         res.json(comments);
     } catch (err){
         console.log(err);

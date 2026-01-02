@@ -44,7 +44,6 @@ const postSignup = async (req, res) => {
         const saltHash = genPass(password);
         const salt = saltHash.salt;
         const hash = saltHash.hash;
-
         const newUser = await prisma.user.create({
             data: {
                 username: username,
@@ -53,18 +52,11 @@ const postSignup = async (req, res) => {
             }
         })
         
-        const privateKey = fs.readFileSync('private.key');
-        const data = { userId: user.id }
+        const data = { userId: newUser.id }
 
 
-        jwt.sign({ userId: newUser.id }, privateKey, { algorithm: 'RS256' }, (err, token) => {
-            if(err){
-                res.status(400).send('error')
-            }else {
-                res.send(token)
-
-            }
-        });
+        const token = getToken(data);
+        res.json(token);
     }catch (err){
         console.log(err);
         res.status(500).send('unkown error');

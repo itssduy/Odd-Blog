@@ -31,9 +31,48 @@ const getCurrentUser = async (req, res)=> {
     res.json(user);
 }
 
+const getUserPosts = async (req, res)=>{
+    try {
+        const userId = req.params.userId;
 
+        const posts = await prisma.post.findMany({
+            where: {
+                authorId: userId
+            }
+        })
+        res.json(posts);
+    } catch(err){
+        res.status(500).json({"message": "error"});
+    }
+}
+
+const getUserComments = async (req, res)=>{
+    try {
+        const userId = req.params.userId;
+
+        const comments = await prisma.comment.findMany({
+            where: {
+                authorId: userId
+            },
+            include: {
+                post: {
+                    select: {
+                        id: true,
+                        title: true
+                    }
+                }
+            }
+        })
+        res.json(comments);
+    } catch(err){
+        console.log(err)
+        res.status(500).json({"message": "error"});
+    }
+}
 
 export default {
     getUser,
-    getCurrentUser
+    getCurrentUser,
+    getUserPosts,
+    getUserComments
 }

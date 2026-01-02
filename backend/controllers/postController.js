@@ -67,13 +67,20 @@ const putPost = async (req, res)=>{
 const deletePost = async (req, res)=>{
     try {
         const postId = req.params.postId;
+        await prisma.comment.deleteMany({
+            where: {
+                postId: postId
+            }
+        })
         await prisma.post.delete({
             where: {
                 id: postId
             }
         });
+
         res.json('sucessful');
     } catch (err) {
+        console.log(err)
         res.status(400).send('error')
     }
 }
