@@ -13,7 +13,10 @@ const PORT = process.env.PORT || 3030
 const app = express()
 
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: [
+        "http://localhost:5173",
+        "https://odd-blog-frontend-production.up.railway.app",
+    ]
 }))
 
 app.use(urlencoded({extended: true}));
