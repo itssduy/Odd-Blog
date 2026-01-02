@@ -1,5 +1,3 @@
-import fs from 'fs'
-
 import { prisma } from "../lib/prisma.js"
 import { genPass, verifyPass } from "../lib/passwordUtils.js"
 import { getToken, verifyToken } from "../lib/tokenUtils.js"

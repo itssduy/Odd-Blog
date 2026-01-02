@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken'
-import fs from 'fs'
 
-const privateKey = fs.readFileSync('private.key', 'utf8');
-const publicKey = fs.readFileSync('private.key.pub', 'utf8');
+const privateKey = process.env.PRIVATE_KEY
+const publicKey = process.env.PUBLIC_KEY
 
 const getToken = (data)=> {
 
