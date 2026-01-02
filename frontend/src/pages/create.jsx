@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router';
 
 const Create = ()=>{
     const [getTitle, setTitle] = useState('');
     const [getText, setText] = useState('');
+    const navigate = useNavigate();
 
     const onSubmit = async (e)=>{
         e.preventDefault();
@@ -24,6 +26,7 @@ const Create = ()=>{
 
         const data = await response.json()
         console.log(data)
+        navigate(`/blog/${data.id}`);
     }
 
     return (

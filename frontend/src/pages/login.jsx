@@ -37,7 +37,7 @@ const Login = ()=>{
     }
     return (
         <>
-
+            <h1>Login</h1>
             <form onSubmit={onSubmit}> 
                 <input type="text" name="username" placeholder="Username" onChange={(x)=>{setUsername(x.target.value)}}/>
                 <input type="password" name="password" placeholder="password" onChange={(x)=>{setPassword(x.target.value)}}/>

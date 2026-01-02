@@ -7,6 +7,8 @@ import Blog from "./templates/blog.jsx"
 import Home from "./pages/home.jsx"
 import Post from "./pages/post.jsx"
 import Create from "./pages/create.jsx"
+import User from "./pages/user.jsx"
+import UsersTemplate from "./templates/users.jsx"
 
 const routes = [
     {
@@ -48,6 +50,13 @@ const routes = [
             },
             {
                 path: 'users',
+                element: <UsersTemplate/>,
+                children: [
+                    {
+                        path: ':userId',
+                        element: <User/>
+                    }
+                ]
             }
 
         ]
