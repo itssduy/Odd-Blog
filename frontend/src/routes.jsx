@@ -45,6 +45,9 @@ const routes = [
             {
                 path: 'create',
                 element: <Create/>
+            },
+            {
+                path: 'users',
             }
 
         ]

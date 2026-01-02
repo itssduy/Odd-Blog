@@ -21,8 +21,8 @@ app.use(express.json())
 
 app.use('/auth', authRoute);
 app.use('/posts', postRoute);
-app.use('/user', commentRoute);
-app.use('/comment', userRoute);
+app.use('/users', userRoute);
+app.use('/comments', commentRoute);
 
 app.listen(PORT, ()=>{
     console.log(`App is running on PORT ${PORT}`)
